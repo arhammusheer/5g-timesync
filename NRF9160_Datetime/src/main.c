@@ -25,12 +25,29 @@ void button_pressed(const struct device *dev, struct gpio_callback *cb, uint32_t
     {
         printk("Failed to get date and time: %d\n", err);
     }
-    printk("%lld\n", t);
+
+    // Print format: TIME; RSRP; IP; APN; ICCID; IMEI; IMSI; FW; CELLID
+    printk("%lld; ", t);
+    print_modem_info(MODEM_INFO_RSRP, false);
+    printk("; ");
+    print_modem_info(MODEM_INFO_IP_ADDRESS, false);
+    printk("; ");
+    print_modem_info(MODEM_INFO_APN, false);
+    printk("; ");
+    print_modem_info(MODEM_INFO_ICCID, false);
+    printk("; ");
+    print_modem_info(MODEM_INFO_IMEI, false);
+    printk("; ");
+    print_modem_info(MODEM_INFO_IMSI, false);
+    printk("; ");
+    print_modem_info(MODEM_INFO_FW_VERSION, false);
+    printk("; ");
+    print_modem_info(MODEM_INFO_CELLID, true);
 }
 
 static struct gpio_callback button_cb_data;
 
-void print_modem_info(enum modem_info info)
+void print_modem_info(enum modem_info info, bool next_line)
 {
     int len;
     char buf[80];
@@ -61,6 +78,9 @@ void print_modem_info(enum modem_info info)
     case MODEM_INFO_APN:
         printk("APN: ");
         break;
+    case MODEM_INFO_CELLID:
+        printk("Cell ID: ");
+        break;
     default:
         printk("Unsupported: ");
         break;
@@ -69,7 +89,11 @@ void print_modem_info(enum modem_info info)
     len = modem_info_string_get(info, buf, 80);
     if (len > 0)
     {
-        printk("%s\n", buf);
+        printk("%s", buf);
+        if (next_line)
+        {
+            printk("\n");
+        }
     }
     else
     {
@@ -105,9 +129,9 @@ void main(void)
     if (err)
         printk("MODEM: Failed initializing modem info module, error: %d\n", err);
 
-    print_modem_info(MODEM_INFO_FW_VERSION);
-    print_modem_info(MODEM_INFO_IMEI);
-    print_modem_info(MODEM_INFO_ICCID);
+    print_modem_info(MODEM_INFO_FW_VERSION, true);
+    print_modem_info(MODEM_INFO_IMEI, true);
+    print_modem_info(MODEM_INFO_ICCID, true);
 
     printk("Waiting for network... ");
     err = lte_lc_init_and_connect();
@@ -118,9 +142,9 @@ void main(void)
     }
 
     printk("OK\n");
-    print_modem_info(MODEM_INFO_APN);
-    print_modem_info(MODEM_INFO_IP_ADDRESS);
-    print_modem_info(MODEM_INFO_RSRP);
+    print_modem_info(MODEM_INFO_APN, true);
+    print_modem_info(MODEM_INFO_IP_ADDRESS, true);
+    print_modem_info(MODEM_INFO_RSRP, true);
     // Your application code goes here
 
     k_msleep(500);
@@ -143,16 +167,16 @@ void main(void)
 
     printk("Ready\n");
 
-   // Print time every 10 seconds
+    // Print time every 10 seconds
     // while (1)
     // {
     //     k_msleep(9990);
-        
+
     //     // Turn on LED
     //     gpio_pin_set_dt(&led, 1);
     //     k_msleep(10);
 
-    //     // Print Time   
+    //     // Print Time
     //     int err = date_time_now(&t);
     //     if (err)
     //     {
@@ -162,7 +186,6 @@ void main(void)
 
     //     // Turn off LED
     //     gpio_pin_set_dt(&led, 0);
-
 
     // }
 }
