@@ -26,7 +26,7 @@ void button_pressed(const struct device *dev, struct gpio_callback *cb, uint32_t
         printk("Failed to get date and time: %d\n", err);
     }
 
-    // Print format: TIME; RSRP; IP; APN; ICCID; IMEI; IMSI; FW; CELLID
+    // Print format: TIME; RSRP; IP; APN; ICCID; IMEI; IMSI; FW; CELLID; OPERATOR; BAND
     printk("%lld; ", t);
     print_modem_info(MODEM_INFO_RSRP, false);
     printk("; ");
@@ -42,7 +42,13 @@ void button_pressed(const struct device *dev, struct gpio_callback *cb, uint32_t
     printk("; ");
     print_modem_info(MODEM_INFO_FW_VERSION, false);
     printk("; ");
-    print_modem_info(MODEM_INFO_CELLID, true);
+    print_modem_info(MODEM_INFO_CELLID, false);
+    printk("; ");
+    print_modem_info(MODEM_INFO_OPERATOR, false);
+    printk("; ");
+    print_modem_info(MODEM_INFO_CUR_BAND, true);
+    
+
 }
 
 static struct gpio_callback button_cb_data;
@@ -80,6 +86,12 @@ void print_modem_info(enum modem_info info, bool next_line)
         break;
     case MODEM_INFO_CELLID:
         printk("Cell ID: ");
+        break;
+    case MODEM_INFO_CUR_BAND:
+        printk("Current Band: ");
+        break;
+    case MODEM_INFO_OPERATOR:
+        printk("Operator: ");
         break;
     default:
         printk("Unsupported: ");
