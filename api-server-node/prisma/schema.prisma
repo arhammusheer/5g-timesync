@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Datapoint {
+  id              Int     @id @default(autoincrement())
+  device_id       Int
+  time            String?
+  signal_strength String?
+  ip_addr         String?
+  apn             String?
+  sim_iccid       String?
+  imei            String?
+  imsi            String?
+  modem_fw_ver    String?
+  cell_id         String?
+  pi              String?
+  device          Device  @relation(fields: [device_id], references: [id])
+}
+
+model Device {
+  id         Int         @id @default(autoincrement())
+  name       String
+  datapoints Datapoint[]
+}

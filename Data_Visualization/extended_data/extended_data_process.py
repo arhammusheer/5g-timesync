@@ -11,8 +11,9 @@ def extract_data(data):
 		data = [extract_kv_pairs(i) for i in data]
 
 		# Add pi to data
+		data.append({"pi":pi})
 
-		data.append({"Pi":pi})
+		
 
 		# Merge all dictionaries
 		data = {k:v for i in data for k,v in i.items()}
@@ -23,10 +24,16 @@ def extract_kv_pairs(data):
 		d = data.split(":")
 
 		if len(d) != 2:
-				k = "Time"
+				k = "time"
 				return {k:data}
 
+		
 		k = d[0].strip()
+		# replace space with underscore
+		k = k.replace(" ", "_")
+		# To lower case
+		k = k.lower()
+
 		v = d[1].strip()
 		return {k:v}
 
