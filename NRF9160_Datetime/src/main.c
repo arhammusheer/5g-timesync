@@ -17,7 +17,7 @@ static const struct gpio_dt_spec button = GPIO_DT_SPEC_GET(SW0_NODE, gpios);
 static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(LED0_NODE, gpios);
 int64_t t;
 
-void button_pressed(const struct device *dev, struct gpio_callback *cb, uint32_t pins)
+void button_pressed(const struct device* dev, struct gpio_callback* cb, uint32_t pins)
 {
     gpio_pin_toggle_dt(&led);
     int err = date_time_now(&t);
@@ -41,18 +41,18 @@ void button_pressed(const struct device *dev, struct gpio_callback *cb, uint32_t
 
     // Print format: TIME; CUR_BAND; SUP_BAND; AREA_CODE; UE_MODE; CELLID; IP_ADDRESS; TEMP; LTE_MODE; NBIOT_MODE; RSRP; IMEI; OPERATOR
     printk("Time: %lld; ", t);
-    print_modem_info(MODEM_INFO_RSRP, false);
-    print_modem_info(MODEM_INFO_CUR_BAND, false);
-    print_modem_info(MODEM_INFO_SUP_BAND, false);
-    print_modem_info(MODEM_INFO_AREA_CODE, false);
-    print_modem_info(MODEM_INFO_UE_MODE, false);
-    print_modem_info(MODEM_INFO_CELLID, false);
-    print_modem_info(MODEM_INFO_IP_ADDRESS, false);
-    print_modem_info(MODEM_INFO_TEMP, false);
-    print_modem_info(MODEM_INFO_LTE_MODE, false);
-    print_modem_info(MODEM_INFO_NBIOT_MODE, false);
-    print_modem_info(MODEM_INFO_IMEI, false);
-    print_modem_info(MODEM_INFO_OPERATOR, true);
+    print_modem_info(MODEM_INFO_RSRP, false); printk("; ")
+        print_modem_info(MODEM_INFO_CUR_BAND, false);printk("; ")
+        print_modem_info(MODEM_INFO_SUP_BAND, false);printk("; ")
+        print_modem_info(MODEM_INFO_AREA_CODE, false);printk("; ")
+        print_modem_info(MODEM_INFO_UE_MODE, false);printk("; ")
+        print_modem_info(MODEM_INFO_CELLID, false);printk("; ")
+        print_modem_info(MODEM_INFO_IP_ADDRESS, false);printk("; ")
+        print_modem_info(MODEM_INFO_TEMP, false);printk("; ")
+        print_modem_info(MODEM_INFO_LTE_MODE, false);printk("; ")
+        print_modem_info(MODEM_INFO_NBIOT_MODE, false);printk("; ")
+        print_modem_info(MODEM_INFO_IMEI, false);printk("; ")
+        print_modem_info(MODEM_INFO_OPERATOR, true);
 
     //
 }
