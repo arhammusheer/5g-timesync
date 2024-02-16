@@ -6,7 +6,6 @@
 #include <modem/lte_lc.h>
 #include <modem/modem_info.h>
 
-
 #include <date_time.h>
 
 /* SW0_NODE is the devicetree node identifier for the "sw0" alias */
@@ -43,16 +42,27 @@ void button_pressed(const struct device *dev, struct gpio_callback *cb, uint32_t
     // Print format: TIME; CUR_BAND; SUP_BAND; AREA_CODE; UE_MODE; CELLID; IP_ADDRESS; TEMP; LTE_MODE; NBIOT_MODE; RSRP; IMEI; OPERATOR
     printk("Time: %lld; ", t);
     print_modem_info(MODEM_INFO_RSRP, false);
+    printk("; ");
     print_modem_info(MODEM_INFO_CUR_BAND, false);
+    printk("; ");
     print_modem_info(MODEM_INFO_SUP_BAND, false);
+    printk("; ");
     print_modem_info(MODEM_INFO_AREA_CODE, false);
+    printk("; ");
     print_modem_info(MODEM_INFO_UE_MODE, false);
+    printk("; ");
     print_modem_info(MODEM_INFO_CELLID, false);
+    printk("; ");
     print_modem_info(MODEM_INFO_IP_ADDRESS, false);
+    printk("; ");
     print_modem_info(MODEM_INFO_TEMP, false);
+    printk("; ");
     print_modem_info(MODEM_INFO_LTE_MODE, false);
+    printk("; ");
     print_modem_info(MODEM_INFO_NBIOT_MODE, false);
+    printk("; ");
     print_modem_info(MODEM_INFO_IMEI, false);
+    printk("; ");
     print_modem_info(MODEM_INFO_OPERATOR, true);
 
     //
