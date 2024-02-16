@@ -3,7 +3,9 @@
         {
             "name": "Mac",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/opt/nordic/ncs/v2.4.2/zephyr/include",
+                "/opt/nordic/ncs/v2.4.2/modem"
             ],
             "defines": [],
             "macFrameworkPath": [

@@ -11,7 +11,7 @@ async function uploadData(data: Datapoint[]) {
 
 }
 
-const CURRENT_DEVICE = 1;
+const CURRENT_DEVICE = 3;
 
 const dataFromFile = (file: string): Datapoint[] => {
   const data = require(file);

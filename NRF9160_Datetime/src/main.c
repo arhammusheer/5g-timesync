@@ -6,6 +6,7 @@
 #include <modem/lte_lc.h>
 #include <modem/modem_info.h>
 
+
 #include <date_time.h>
 
 /* SW0_NODE is the devicetree node identifier for the "sw0" alias */
@@ -26,29 +27,35 @@ void button_pressed(const struct device *dev, struct gpio_callback *cb, uint32_t
         printk("Failed to get date and time: %d\n", err);
     }
 
-    // Print format: TIME; RSRP; IP; APN; ICCID; IMEI; IMSI; FW; CELLID; OPERATOR; BAND
-    printk("%lld; ", t);
-    print_modem_info(MODEM_INFO_RSRP, false);
-    printk("; ");
-    print_modem_info(MODEM_INFO_IP_ADDRESS, false);
-    printk("; ");
-    print_modem_info(MODEM_INFO_APN, false);
-    printk("; ");
-    print_modem_info(MODEM_INFO_ICCID, false);
-    printk("; ");
-    print_modem_info(MODEM_INFO_IMEI, false);
-    printk("; ");
-    print_modem_info(MODEM_INFO_IMSI, false);
-    printk("; ");
-    print_modem_info(MODEM_INFO_FW_VERSION, false);
-    printk("; ");
-    print_modem_info(MODEM_INFO_CELLID, false);
-    printk("; ");
-    print_modem_info(MODEM_INFO_OPERATOR, false);
-    printk("; ");
-    print_modem_info(MODEM_INFO_CUR_BAND, true);
-    
+    // MODEM_INFO_CUR_BAND
+    // MODEM_INFO_SUP_BAND
+    // MODEM_INFO_AREA_CODE
+    // MODEM_INFO_UE_MODE
+    // MODEM_INFO_CELLID
+    // MODEM_INFO_IP_ADDRESS
+    // MODEM_INFO_TEMP
+    // MODEM_INFO_LTE_MODE
+    // MODEM_INFO_NBIOT_MODE
+    // MODEM_INFO_RSRP
+    // MODEM_INFO_IMEI
+    // MODEM_INFO_OPERATOR
 
+    // Print format: TIME; CUR_BAND; SUP_BAND; AREA_CODE; UE_MODE; CELLID; IP_ADDRESS; TEMP; LTE_MODE; NBIOT_MODE; RSRP; IMEI; OPERATOR
+    printk("Time: %lld; ", t);
+    print_modem_info(MODEM_INFO_RSRP, false);
+    print_modem_info(MODEM_INFO_CUR_BAND, false);
+    print_modem_info(MODEM_INFO_SUP_BAND, false);
+    print_modem_info(MODEM_INFO_AREA_CODE, false);
+    print_modem_info(MODEM_INFO_UE_MODE, false);
+    print_modem_info(MODEM_INFO_CELLID, false);
+    print_modem_info(MODEM_INFO_IP_ADDRESS, false);
+    print_modem_info(MODEM_INFO_TEMP, false);
+    print_modem_info(MODEM_INFO_LTE_MODE, false);
+    print_modem_info(MODEM_INFO_NBIOT_MODE, false);
+    print_modem_info(MODEM_INFO_IMEI, false);
+    print_modem_info(MODEM_INFO_OPERATOR, true);
+
+    //
 }
 
 static struct gpio_callback button_cb_data;
@@ -93,6 +100,24 @@ void print_modem_info(enum modem_info info, bool next_line)
     case MODEM_INFO_OPERATOR:
         printk("Operator: ");
         break;
+    case MODEM_INFO_SUP_BAND:
+        printk("Supported Bands: ");
+        break;
+    case MODEM_INFO_AREA_CODE:
+        printk("Area Code: ");
+        break;
+    case MODEM_INFO_UE_MODE:
+        printk("UE Mode: ");
+        break;
+    case MODEM_INFO_LTE_MODE:
+        printk("LTE Mode: ");
+        break;
+    case MODEM_INFO_NBIOT_MODE:
+        printk("NBIoT Mode: ");
+        break;
+    case MODEM_INFO_TEMP:
+        printk("Temperature: ");
+        break;
     default:
         printk("Unsupported: ");
         break;
@@ -123,7 +148,7 @@ void main(void)
     if (err)
     {
         printk("Modem initialization failed, err %d\n", err);
-        return 0;
+        return;
     }
 
     printk("Waiting for network\n");
