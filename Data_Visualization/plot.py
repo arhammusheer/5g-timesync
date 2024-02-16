@@ -19,7 +19,7 @@ def read_data(file_name):
 
 
 def main():
-    experiment_number = 0
+    experiment_number = 3
 
     x0, y0 = read_data(f"board0_experiment{experiment_number}.txt")
     x1, y1 = read_data(f"board1_experiment{experiment_number}.txt")
