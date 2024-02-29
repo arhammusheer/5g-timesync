@@ -23,6 +23,50 @@ model Datapoint {
   device          Device  @relation(fields: [device_id], references: [id])
 }
 
+
+    // "time": "1708102702898",
+    // "signal_strength": "71",
+    // "current_band": "12",
+    // "supported_bands": "(1,2,3,4,5,8,12,13,18,19,20,25,26,28,66)",
+    // "area_code": "52F3",
+    // "ue_mode": "2",
+    // "cell_id": "02229217",
+    // "ip_addr": "10.165.153.92",
+    // "temperature": "28",
+    // "lte_mode": "1",
+    // "nbiot_mode": "0",
+    // "imei": "351901936542939",
+    // "operator": "310260",
+    // "pi": "1708102703.5679028"
+
+model DatapointV2 {
+  id              Int     @id @default(autoincrement())
+  device_id       Int
+  
+  time            String?
+  signal_strength String?
+  current_band    String?
+  supported_bands String?
+  area_code       String?
+  ue_mode         String?
+  cell_id         String?
+  ip_addr         String?
+  temperature     String?
+  lte_mode        String?
+  nbiot_mode      String?
+  imei            String?
+  operator        String?
+  pi              String?
+
+  device          DeviceV2  @relation(fields: [device_id], references: [id])
+}
+
+model DeviceV2 {
+  id         Int         @id @default(autoincrement())
+  name       String
+  datapoints DatapointV2[]
+}
+
 model Device {
   id         Int         @id @default(autoincrement())
   name       String

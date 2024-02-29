@@ -8,8 +8,8 @@ async function uploadData(data: Datapoint[]) {
   await prisma.datapoint.createMany({
 		data: data,
 	});
-
 }
+
 
 const CURRENT_DEVICE = 3;
 

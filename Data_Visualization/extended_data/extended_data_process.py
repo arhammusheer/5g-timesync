@@ -3,9 +3,17 @@
 import os
 import json
 
+# Extract data from string
 def extract_data(data):
-		[pi, data] = data.split(",")	
-		
+		# Extract pi
+		data = data.split(",", 1)
+
+		pi = data[0].strip()
+
+		# Remove pi from data
+		data = data[1]
+
+		# Remaing data after pi		
 		data = data.split(";")
 		data = [i.strip() for i in data]
 		data = [extract_kv_pairs(i) for i in data]
